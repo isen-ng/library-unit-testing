@@ -2,6 +2,7 @@ package com.github.isenng.libraryunittesting.library;
 
 import com.github.isenng.libraryunittesting.library.duedates.DueDateCalculator;
 import com.github.isenng.libraryunittesting.library.exceptions.AlreadyCheckedOutException;
+import com.github.isenng.libraryunittesting.library.exceptions.NotCheckedOutException;
 
 import java.time.LocalDate;
 
@@ -19,6 +20,15 @@ public class LibraryBookImpl implements LibraryBook {
     }
 
     @Override
+    public LocalDate getDueDate() throws NotCheckedOutException {
+        if (dueDate == null) {
+            throw new NotCheckedOutException();
+        }
+
+        return null;
+    }
+
+    @Override
     public synchronized LocalDate checkOut() throws AlreadyCheckedOutException {
         if (dueDate != null) {
             throw new AlreadyCheckedOutException();
@@ -26,5 +36,14 @@ public class LibraryBookImpl implements LibraryBook {
 
         dueDate = dueDateCalculator.calculateDueDate();
         return dueDate;
+    }
+
+    @Override
+    public synchronized void checkIn() throws NotCheckedOutException {
+        if (dueDate == null) {
+            throw new NotCheckedOutException();
+        }
+
+        dueDate = null;
     }
 }
