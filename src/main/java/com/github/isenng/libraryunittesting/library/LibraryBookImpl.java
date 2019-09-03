@@ -25,7 +25,7 @@ public class LibraryBookImpl implements LibraryBook {
             throw new NotCheckedOutException();
         }
 
-        return null;
+        return dueDate;
     }
 
     @Override
